@@ -1,0 +1,86 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "outputs": {},
+  "parameters": {},
+  "resources": [
+    {
+      "apiVersion": "2016-08-01",
+      "dependsOn": [
+        "isaacwebbing-farm",
+        "isaacwebbing-ai"
+      ],
+      "kind": "app,linux",
+      "location": "northeurope",
+      "name": "isaacwebbing",
+      "properties": {
+        "httpsOnly": false,
+        "serverFarmId": "isaacwebbing-farm",
+        "siteConfig": {
+          "alwaysOn": false,
+          "appSettings": [],
+          "linuxFxVersion": "DOTNETCORE|LTS",
+          "metadata": []
+        }
+      },
+      "type": "Microsoft.Web/sites"
+    },
+    {
+      "apiVersion": "2014-04-01",
+      "kind": "web",
+      "location": "northeurope",
+      "name": "isaacwebbing-ai",
+      "properties": {
+        "Application_Type": "web",
+        "name": "isaacwebbing-ai"
+      },
+      "tags": {
+        "displayName": "AppInsightsComponent"
+      },
+      "type": "Microsoft.Insights/components"
+    },
+    {
+      "apiVersion": "2018-02-01",
+      "kind": "linux",
+      "location": "northeurope",
+      "name": "isaacwebbing-farm",
+      "properties": {
+        "name": "isaacwebbing-farm",
+        "perSiteScaling": false,
+        "reserved": true
+      },
+      "sku": {
+        "capacity": 2,
+        "name": "B1",
+        "size": "0",
+        "tier": "Basic"
+      },
+      "type": "Microsoft.Web/serverfarms"
+    },
+    {
+      "apiVersion": "2018-07-01",
+      "kind": "StorageV2",
+      "location": "northeurope",
+      "name": "isaacstoring",
+      "resources": [],
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "type": "Microsoft.Storage/storageAccounts"
+    },
+    {
+      "apiVersion": "2015-08-19",
+      "location": "northeurope",
+      "name": "isaacsearching",
+      "properties": {
+        "hostingMode": "default",
+        "partitionCount": 1,
+        "replicaCount": 1
+      },
+      "sku": {
+        "name": "standard"
+      },
+      "type": "Microsoft.Search/searchServices"
+    }
+  ]
+}

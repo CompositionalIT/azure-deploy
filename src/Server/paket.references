@@ -1,0 +1,5 @@
+group Server
+FSharp.Core
+Saturn
+Fable.Remoting.Giraffe
+Farmer
